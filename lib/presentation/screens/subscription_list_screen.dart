@@ -81,7 +81,7 @@ class _SubscriptionListScreenState extends State<SubscriptionListScreen> {
     }
 
     if (widget.error != null) {
-      return Center(
+            return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -140,13 +140,13 @@ class _SubscriptionListScreenState extends State<SubscriptionListScreen> {
             ),
           ],
         ),
-      );
-    }
+            );
+          }
 
-    return ListView.builder(
+          return ListView.builder(
       padding: const EdgeInsets.all(16),
       itemCount: widget.subscriptions.length,
-      itemBuilder: (context, index) {
+            itemBuilder: (context, index) {
         final subscription = widget.subscriptions[index];
         return NeomorphicCard(
           margin: const EdgeInsets.only(bottom: 16),
@@ -274,9 +274,9 @@ class _SubscriptionListScreenState extends State<SubscriptionListScreen> {
               ],
             ],
           ),
-        );
-      },
-    );
+              );
+            },
+          );
   }
 
   void _showAddSubscriptionDialog(BuildContext context) {

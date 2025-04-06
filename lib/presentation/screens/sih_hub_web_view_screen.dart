@@ -25,7 +25,7 @@ class SIHHubWebViewScreen extends StatefulWidget {
 class _SIHHubWebViewScreenState extends State<SIHHubWebViewScreen> {
   late final WebViewController _controller;
   late final SIHHubAuthService _authService;
-  final ReplicateApiService _replicateService = ReplicateApiService();
+  // final ReplicateApiService _replicateService = ReplicateApiService();
   Timer? _automationTimer;
   bool _isLoading = true;
   bool _hasError = false;
@@ -340,55 +340,55 @@ class _SIHHubWebViewScreenState extends State<SIHHubWebViewScreen> {
     }
   }
 
-  Future<void> _captureAndAnalyzeScreen() async {
-    try {
-      // Capture the current screen using JavaScript
-      final result = await _controller.runJavaScriptReturningResult('''
-        (async () => {
-          const canvas = document.createElement('canvas');
-          const context = canvas.getContext('2d');
-          const video = document.createElement('video');
-          
-          try {
-            const stream = await navigator.mediaDevices.getDisplayMedia({
-              preferCurrentTab: true
-            });
-            
-            video.srcObject = stream;
-            await video.play();
-            
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            context.drawImage(video, 0, 0);
-            
-            stream.getTracks().forEach(track => track.stop());
-            
-            return canvas.toDataURL('image/png');
-          } catch (e) {
-            console.error('Error capturing screen:', e);
-            return null;
-          }
-        })()
-      ''');
+  // Future<void> _captureAndAnalyzeScreen() async {
+  //   try {
+  //     // Capture the current screen using JavaScript
+  //     final result = await _controller.runJavaScriptReturningResult('''
+  //       (async () => {
+  //         const canvas = document.createElement('canvas');
+  //         const context = canvas.getContext('2d');
+  //         const video = document.createElement('video');
 
-      if (result == null) {
-        print('Failed to capture screenshot');
-        return;
-      }
+  //         try {
+  //           const stream = await navigator.mediaDevices.getDisplayMedia({
+  //             preferCurrentTab: true
+  //           });
 
-      // Remove the data URL prefix
-      final base64Image =
-          result.toString().replaceAll('data:image/png;base64,', '');
+  //           video.srcObject = stream;
+  //           await video.play();
 
-      // Analyze using Replicate API
-      final analysisResult = await _replicateService
-          .analyzeImage('data:image/png;base64,$base64Image');
+  //           canvas.width = video.videoWidth;
+  //           canvas.height = video.videoHeight;
+  //           context.drawImage(video, 0, 0);
 
-      print('Analysis Result: ${jsonEncode(analysisResult)}');
-    } catch (e) {
-      print('Error capturing/analyzing screen: $e');
-    }
-  }
+  //           stream.getTracks().forEach(track => track.stop());
+
+  //           return canvas.toDataURL('image/png');
+  //         } catch (e) {
+  //           console.error('Error capturing screen:', e);
+  //           return null;
+  //         }
+  //       })()
+  //     ''');
+
+  //     if (result == null) {
+  //       print('Failed to capture screenshot');
+  //       return;
+  //     }
+
+  //     // Remove the data URL prefix
+  //     final base64Image =
+  //         result.toString().replaceAll('data:image/png;base64,', '');
+
+  //     // Analyze using Replicate API
+  //     final analysisResult = await _replicateService
+  //         .analyzeImage('data:image/png;base64,$base64Image');
+
+  //     print('Analysis Result: ${jsonEncode(analysisResult)}');
+  //   } catch (e) {
+  //     print('Error capturing/analyzing screen: $e');
+  //   }
+  // }
 
   Future<void> _capturePageHtml() async {
     try {
@@ -463,7 +463,7 @@ class _SIHHubWebViewScreenState extends State<SIHHubWebViewScreen> {
     }
 
     // Capture and analyze screen after page loads
-    await _captureAndAnalyzeScreen();
+    // await _captureAndAnalyzeScreen();
   }
 
   // New method to force update step based on URL and page content
